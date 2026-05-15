@@ -26,9 +26,20 @@
 - **灵活配置**：支持 `config.json` 配置文件和命令行参数，可按文件名单独设置字幕
 - **自定义字体**：支持在 `fonts` 目录放置 `.ttf` / `.otf` 字体文件
 
-## 快速开始
+## 作为 Claude Code Plugin 安装
 
-### 安装
+在 Claude Code 中执行以下命令即可安装：
+
+```
+/plugin marketplace add xysDavid/xpan-film-maker
+/plugin install xpan-film-maker
+```
+
+安装后可用：
+- **Skill**：`/xpan-film-maker:xpan-film "东京的黄昏" "Dusk in Tokyo"`
+- **MCP 工具**：`process_xpan_image` — 其他 agent 可直接通过工具调用
+
+## 手动安装（CLI 使用）
 
 ```bash
 git clone git@github.com:xysDavid/xpan-film-maker.git
@@ -100,12 +111,19 @@ node src/index.js --no-overwrite
 
 ```
 xpan-film-maker/
+├── .claude-plugin/
+│   └── plugin.json # Claude Code Plugin 清单
+├── skills/
+│   └── xpan-film/
+│       └── SKILL.md  # Skill 定义
+├── .mcp.json       # MCP Server 配置
+├── mcp-server.js   # MCP Server 入口
 ├── input/          # 放置源照片
 ├── output/         # 生成的电影画幅图片
 ├── fonts/          # 自定义字体文件
 ├── config.json     # 字幕配置
 └── src/
-    ├── index.js    # 入口与批量调度
+    ├── index.js    # CLI 入口与批量调度
     ├── config.js   # 配置加载
     ├── fonts.js    # 字体加载
     └── process.js  # 核心图片处理
@@ -116,6 +134,7 @@ xpan-film-maker/
 - **Node.js** >= 18
 - **[sharp](https://sharp.pixelplumbing.com/)** — 高性能图片处理
 - **SVG text overlay** — 轻量文字渲染，无需 Cairo 等原生依赖
+- **[@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)** — MCP Server 支持
 
 ## License
 

@@ -1,0 +1,6 @@
+{
+  "xpan-film": {
+    "command": "node",
+    "args": ["mcp-server.js"]
+  }
+}

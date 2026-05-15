@@ -1,0 +1,12 @@
+{
+  "name": "xpan-film-maker",
+  "description": "将哈苏 XPan 全景照片转换为电影画幅风格图片，支持中英双语字幕",
+  "version": "1.0.0",
+  "author": {
+    "name": "xysDavid"
+  },
+  "repository": "https://github.com/xysDavid/xpan-film-maker",
+  "license": "ISC",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}
