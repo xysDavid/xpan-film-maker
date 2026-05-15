@@ -11,7 +11,7 @@ const CONFIG_PATH = path.resolve('config.json');
 export function loadConfig() {
   // 解析命令行参数
   const argv = minimist(process.argv.slice(2), {
-    string: ['cn', 'en'],
+    string: ['cn', 'en', 'input', 'output'],
     boolean: ['no-overwrite'],
     default: { 'no-overwrite': false },
   });
@@ -43,6 +43,8 @@ export function loadConfig() {
     images: fileConfig.images || {},
     noOverwrite: argv['no-overwrite'],
     cliSubtitle,
+    inputFile: argv.input || null,
+    outputFile: argv.output || null,
   };
 }
 
