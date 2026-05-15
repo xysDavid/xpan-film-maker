@@ -1,0 +1,14 @@
+node_modules/
+output/*.jpg
+output/*.jpeg
+output/*.png
+input/*.jpg
+input/*.jpeg
+input/*.png
+input/*.tiff
+input/*.tif
+fonts/*.ttf
+fonts/*.otf
+fonts/*.woff
+fonts/*.woff2
+.DS_Store

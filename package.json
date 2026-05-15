@@ -1,0 +1,23 @@
+{
+  "name": "xpan-film-maker",
+  "version": "1.0.0",
+  "description": "将哈苏 XPan 全景照片转换为电影画幅风格图片，附带中英双语字幕",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "xpan",
+    "hasselblad",
+    "cinematic",
+    "film",
+    "letterbox"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.8",
+    "sharp": "^0.34.5"
+  }
+}
