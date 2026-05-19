@@ -12,6 +12,7 @@ const __dirname = path.dirname(__filename);
 // 动态导入项目模块（使用绝对路径确保可靠）
 const { processImage } = await import(path.join(__dirname, 'src', 'process.js'));
 const { loadFonts: loadFontsOriginal } = await import(path.join(__dirname, 'src', 'fonts.js'));
+const { cropImage3x4 } = await import(path.join(__dirname, 'src', 'crop-3x4.js'));
 
 const SUPPORTED_EXTS = new Set(['.jpg', '.jpeg', '.png', '.tiff', '.tif']);
 
@@ -128,6 +129,40 @@ server.tool(
     } catch (err) {
       return {
         content: [{ type: 'text', text: `处理失败: ${err.message}` }],
+        isError: true,
+      };
+    }
+  },
+);
+
+// 注册工具：裁切横向图片为 3:4 竖向图片
+server.tool(
+  'crop_image_3x4',
+  '将横向图片裁切为多张宽高比 3:4 的竖向图片。图片必须是横向的（宽>高），裁切时左右均匀丢弃多余像素。',
+  {
+    inputPath: z.string().describe('输入图片的绝对路径'),
+    outputDir: z.string().optional().describe('输出目录的绝对路径（默认为插件目录下的 output）'),
+  },
+  async ({ inputPath, outputDir }) => {
+    try {
+      const resolvedOutputDir = outputDir || path.join(__dirname, 'output');
+
+      const result = await cropImage3x4(inputPath, resolvedOutputDir);
+
+      const summary = [
+        `裁切完成！`,
+        `原图尺寸: ${result.cropWidth * result.count + result.excess} × ${result.height}`,
+        `每张裁切图: ${result.cropWidth} × ${result.height} (3:4)`,
+        `共生成 ${result.count} 张图片，左右各丢弃约 ${Math.floor(result.excess / 2)} 像素`,
+        `输出目录: ${result.outputDir}`,
+        '',
+        ...result.files.map((f, i) => `✓ [${i + 1}/${result.count}] ${f}`),
+      ].join('\n');
+
+      return { content: [{ type: 'text', text: summary }] };
+    } catch (err) {
+      return {
+        content: [{ type: 'text', text: `裁切失败: ${err.message}` }],
         isError: true,
       };
     }
